@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:10:10 by tshigena          #+#    #+#             */
-/*   Updated: 2021/11/21 10:25:51 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/03 01:37:55 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,11 @@ int	check_map_row_is_valid(char *row, size_t row_lens, t_game *game)
 		if (*row == 'C')
 			game->map.num_collectible += 1;
 		if (*row == 'P')
+		{
 			game->map.num_exit += 1;
+			if (game->map.num_exit > 1)
+				return (1);
+		}
 		if (*row == 'E')
 			game->map.num_s_position += 1;
 		row++;

@@ -6,11 +6,13 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 23:00:44 by tshigena          #+#    #+#             */
-/*   Updated: 2021/11/16 13:33:09 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/03 15:50:41 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+
+#define BUFFER_SIZE 5
 
 void	ft_free(char **p);
 int		split_by_n(char *total, char **line, char **save, char *location_n);

@@ -6,10 +6,12 @@ CFLAGS = -Wall -Wextra -Werror
 SRCS = src/get_next_line.c src/get_map.c src/main.c
 OBJS = $(SRCS:%.c=%.o)
 
+FRAMEWORK = -L ./minilibx-linux -lmlx -I ./minilibx-linux -lXext -lX11 -lm
+
 all: $(NAME)
 
 $(NAME): $(PRINTF) $(MINILIBX) $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PRINTF) $(MINILIBX)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PRINTF) $(FRAMEWORK)
 
 $(PRINTF): empty
 	make -C ft_printf
@@ -18,7 +20,8 @@ $(MINILIBX): empty
 empty:
 
 %.o:%.c
-	$(CC) $(CFLAGS) -o $@ -c $<
+	# $(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) -o $@ -c $<
 clean:
 	rm -f $(OBJS)
 	make clean -C ft_printf
