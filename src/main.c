@@ -150,6 +150,11 @@ int	ft_input(int key, void *game_)
 	return (0);
 }
 
+int	close_window(void)
+{
+	printf("close\n");
+	exit(1);
+}
 
 int	main(int argc, char **argv)
 {
@@ -165,12 +170,11 @@ int	main(int argc, char **argv)
 	get_map_data(fd, &game);
 	game.mlx = mlx_init();
 	game.mlx_win = mlx_new_window(game.mlx, game.map.row_lens * 32, game.map.number_of_rows * 32, "so_long");
-	// game.img.img = mlx_new_image((char *)g_base_tex_path[2], 50, 50);
 	get_image(&game);
-	mlx_key_hook(game.mlx_win, *ft_input, &game);
-	 
+	// mlx_key_hook(game.mlx_win, *ft_input, &game);
+	mlx_hook(game.mlx_win, 2, 1, &ft_input, &game);
+	mlx_hook(game.mlx_win, 17, 131072, &close_window, &game);
 	printf("main y-> %d\n", game.player.y_position);
-	// mlx_loop_hook(game.mlx_win, *ft_update, &game);
 	mlx_loop(game.mlx);
 	free_all(game.map.map, game.map.number_of_rows);
 	// system("leaks so_long");
