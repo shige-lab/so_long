@@ -156,6 +156,12 @@ int	close_window(void)
 	exit(1);
 }
 
+int	minimize_window(t_game *game)
+{
+	printf("hogehoge: %c\n", game->map.map[0][0]);
+	printf("minimize\n");
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -174,6 +180,7 @@ int	main(int argc, char **argv)
 	// mlx_key_hook(game.mlx_win, *ft_input, &game);
 	mlx_hook(game.mlx_win, 2, 1, &ft_input, &game);
 	mlx_hook(game.mlx_win, 17, 131072, &close_window, &game);
+	mlx_hook(game.mlx_win, 9, 2097152, &minimize_window, &game);
 	printf("main y-> %d\n", game.player.y_position);
 	mlx_loop(game.mlx);
 	free_all(game.map.map, game.map.number_of_rows);
