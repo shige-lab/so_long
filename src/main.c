@@ -158,7 +158,7 @@ int	close_window(void)
 
 int	minimize_window(t_game *game)
 {
-	printf("hogehoge: %c\n", game->map.map[0][0]);
+	get_image(game);
 	printf("minimize\n");
 }
 
