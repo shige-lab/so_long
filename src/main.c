@@ -86,13 +86,14 @@ int	ft_update (void *game_)
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, game->player.x_position * 32, game->player.y_position * 32);
 	game->img.img = mlx_xpm_file_to_image(game->mlx, "assets/floor/floorB.xpm", &game->img.img_height, &game->img.img_width);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, x * 32, y * 32);
+	game->map.map[y][x] = '0';
 	x = game->player.x_position;
 	y = game->player.y_position;
 	if (game->map.map[y][x] == 'C')
 	{
-		game->map.map[y][x] = '0';
 		game->map.num_collectible -= 1;
 	}
+	game->map.map[y][x] = 'P';
 	printf(" c = %ld\n", game->map.num_collectible);
 	return (0);
 }
@@ -105,7 +106,6 @@ t_bool	is_avalable_to_move(t_game *game, char next_position)
 			exit (1);
 		return (FALSE);
 	}
-
 	if (next_position != '1')
 	{
 		game->move_count += 1;
