@@ -43,10 +43,10 @@ starting position.
 
 This is a simple valid map:
 
-1111111111111
-10010000000C1
-1000011111001
-1P0011E000001
+1111111111111  
+10010000000C1  
+1000011111001  
+1P0011E000001  
 1111111111111
 
 ◦ The map must be closed/surrounded by walls, if not the program must return
