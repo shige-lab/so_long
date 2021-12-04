@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:16:16 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/03 16:06:47 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/04 10:45:54 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,10 +144,8 @@ int	ft_input(int key, void *game_)
 		if (is_avalable_to_move(game, game->map.map[y][x + 1]))
 			game->player.x_position += 1;
 	}
-	if (key == ESC)
+	if (key == ESC || key == 432986416)
 		exit(1);
-	printf("x-> %d\n", game->player.x_position);
-	printf("y-> %d\n", game->player.y_position);
 	ft_update(game);
 	return (0);
 }
@@ -170,16 +168,10 @@ int	main(int argc, char **argv)
 	// game.img.img = mlx_new_image((char *)g_base_tex_path[2], 50, 50);
 	get_image(&game);
 	mlx_key_hook(game.mlx_win, *ft_input, &game);
-	printf("main x-> %d\n", game.player.x_position);
+	 
 	printf("main y-> %d\n", game.player.y_position);
 	// mlx_loop_hook(game.mlx_win, *ft_update, &game);
 	mlx_loop(game.mlx);
-	// size_t i = 0;
-	// while (game.map.map[i] != NULL)
-	// {
-	// 	ft_printf("%s", (char *)game.map.map[i]);
-	// 	i++;
-	// }
 	free_all(game.map.map, game.map.number_of_rows);
 	// system("leaks so_long");
 	return (0);

@@ -3,7 +3,7 @@ static char *spriteB2_xpm[] = {
 /* width height num_colors chars_per_pixel */
 "    32    32      256            2",
 /* colors */
-"`` c #5a5a59",
+"`` c #535352",
 "`. c #28161e",
 "`# c #31222b",
 "`a c #302027",

@@ -3,7 +3,7 @@ static char *front1_xpm[] = {
 /* width height num_colors chars_per_pixel */
 "    32    32      256            2",
 /* colors */
-"`` c #5a5a59",
+"`` c #535352",
 "`. c #94665c",
 "`# c #6c2a3c",
 "`a c #242624",
