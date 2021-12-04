@@ -20,6 +20,16 @@
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 
+# define EVENT_KEY_PRESS 2
+# define EVENT_WINDOW_RESIZE 9
+# define EVENT_WINDOW_CLOSE 17
+
+# define MASK_KEY_PRESS 1
+# define MASK_WINDOW_RESIZE 2097152
+# define MASK_WINDOW_CLOSE 131072
+
+# define IMAGE_SIZE 32
+
 # define W 119
 # define S 115
 # define A 97
@@ -32,11 +42,12 @@ typedef enum e_bool
 	FALSE = 0
 }	t_bool;
 
-enum	e_basic_tex_path {
+enum	e_components {
 	WALL,
 	FLOOR,
+	PLAYER,
 	EXIT,
-	SPRITE,
+	COLLECTIBLE
 };
 
 typedef struct s_map
