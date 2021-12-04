@@ -2,4 +2,5 @@ so_long
 *.o
 *.a
 ft_printf
-# README.md
+README.md
+.gitignore

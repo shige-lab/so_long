@@ -1,20 +1,20 @@
 NAME = so_long
-PRINTF = ft_printf/libftprintf.a
+LIBFT = libft/libft.a
 MINILIBX = minilibx-linux/libmlx.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = src/get_next_line.c src/get_map.c src/main.c
+SRCS = src/get_map.c src/main.c
 OBJS = $(SRCS:%.c=%.o)
 
 FRAMEWORK = -L ./minilibx-linux -lmlx -I ./minilibx-linux -lXext -lX11 -lm
 
 all: $(NAME)
 
-$(NAME): $(PRINTF) $(MINILIBX) $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PRINTF) $(FRAMEWORK)
+$(NAME): $(LIBFT) $(MINILIBX) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(FRAMEWORK)
 
-$(PRINTF): empty
-	make -C ft_printf
+$(LIBFT): empty
+	make bonus -C libft
 $(MINILIBX): empty
 	make -C minilibx-linux
 empty:
@@ -24,12 +24,12 @@ empty:
 	$(CC) -o $@ -c $<
 clean:
 	rm -f $(OBJS)
-	make clean -C ft_printf
+	make clean -C libft
 	make clean -C minilibx-linux
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(MINILIBX)
-	make fclean -C ft_printf
+	make fclean -C libft
 re: fclean all
 # test: $(NAME)
 # 	$(CC) $(CFLAGS) $(NAME) main.c &&./a.out

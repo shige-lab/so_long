@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:02:41 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/03 14:21:31 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/04 20:41:06 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
-# include "../ft_printf/ft_printf.h"
+# include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 
 # define W 119

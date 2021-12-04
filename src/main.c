@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:16:16 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/04 10:45:54 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/04 17:46:16 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,6 @@ int	main(int argc, char **argv)
 	// system("leaks so_long");
 	return (0);
 }
-
 
 void	error_exit(char *message)
 {
