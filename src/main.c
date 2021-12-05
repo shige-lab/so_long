@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:16:16 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/04 17:46:16 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/05 13:48:46 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,11 @@ void	get_image(t_game *game)
 	}
 }
 
-int	ft_update (void *game_)
+int	ft_update (void *game_, int x, int y)
 {
-	static int	x = 0;
-	static int	y = 0;
 	t_game *game;
 
 	game = (t_game *)game_;
-	if (x == 0 || y == 0)
-	{
-		x = game->map.p_x_position;
-		y = game->map.p_y_position;
-	}
 	if (x != game->player.x_position || y != game->player.y_position)
 	{
 		game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[PLAYER], &game->img.img_height, &game->img.img_width); 
@@ -154,7 +147,7 @@ int	ft_input(int key, void *game_)
 	}
 	if (key == ESC)
 		exit(1);
-	ft_update(game);
+	ft_update(game, x, y);
 	return (0);
 }
 
