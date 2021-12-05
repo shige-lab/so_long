@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:02:41 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/05 13:59:30 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/05 14:03:09 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,7 @@ typedef struct s_map
 	size_t	num_collectible;
 	size_t	num_exit;
 	size_t	num_s_position;
-	int	p_x_position;
-	int	p_y_position;
 }	t_map;
-
-typedef struct s_tex
-{
-	int				*addr;
-	int				w;
-	int				h;
-}					t_tex;
 
 typedef struct s_img
 {
@@ -84,8 +75,6 @@ typedef struct s_plyaer
 {
 	int	x;
 	int	y;
-	int	x_move_flag;
-	int	y_move_flag; 
 }				t_plyaer;
 
 typedef struct s_game
@@ -94,7 +83,6 @@ typedef struct s_game
 	t_list		*map_tmp;
 	void		*mlx;
 	void		*mlx_win;
-	t_tex		tex[5];
 	t_img		img;
 	t_plyaer	player;
 	int			move_count;
