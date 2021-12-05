@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:02:41 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/05 14:26:02 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/05 15:16:08 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ enum	e_components {
 typedef struct s_map
 {
 	char	**map;
-	size_t	row_lens;
-	size_t	number_of_rows;
+	size_t	width;
+	size_t	length;
 	size_t	num_collectible;
 	size_t	num_exit;
 	size_t	num_s_position;

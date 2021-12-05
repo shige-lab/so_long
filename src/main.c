@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:16:16 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/05 14:00:31 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/05 15:16:08 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	get_image(t_game *game)
 	size_t	x;
 
 	y = 0;
-	while (y < game->map.number_of_rows)
+	while (y < game->map.length)
 	{
 		x = 0;
-		while (x < game->map.row_lens)
+		while (x < game->map.width)
 		{
 			select_image(game, game->map.map[y][x]);
 			mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, x * IMAGE_SIZE, y * IMAGE_SIZE);
@@ -174,7 +174,7 @@ int	main(int argc, char **argv)
 	game = (t_game){0}; 
 	get_map_data(fd, &game);
 	game.mlx = mlx_init();
-	game.mlx_win = mlx_new_window(game.mlx, game.map.row_lens * IMAGE_SIZE, game.map.number_of_rows * IMAGE_SIZE, "so_long");
+	game.mlx_win = mlx_new_window(game.mlx, game.map.width * IMAGE_SIZE, game.map.length * IMAGE_SIZE, "so_long");
 	get_image(&game);
 	// mlx_key_hook(game.mlx_win, *ft_input, &game);
 	mlx_hook(game.mlx_win, EVENT_KEY_PRESS, MASK_KEY_PRESS, &ft_input, &game);
@@ -182,7 +182,7 @@ int	main(int argc, char **argv)
 	mlx_hook(game.mlx_win, EVENT_WINDOW_RESIZE, MASK_WINDOW_CLOSE, &minimize_window, &game);
 	printf("main y-> %d\n", game.player.y);
 	mlx_loop(game.mlx);
-	free_all(game.map.map, game.map.number_of_rows);
+	free_all(game.map.map, game.map.length);
 	// system("leaks so_long");
 	return (0);
 }
