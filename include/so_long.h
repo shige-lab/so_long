@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:02:41 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/04 20:41:06 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/05 13:59:30 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ typedef struct s_img
 
 typedef struct s_plyaer
 {
-	int	x_position;
-	int	y_position;
+	int	x;
+	int	y;
 	int	x_move_flag;
 	int	y_move_flag; 
 }				t_plyaer;

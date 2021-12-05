@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:16:16 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/05 13:48:46 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/05 14:00:31 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ void	get_p_positon(t_game *game, int x, int y)
 {
 	game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[PLAYER], &game->img.img_height, &game->img.img_width); 
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, x * IMAGE_SIZE, y * IMAGE_SIZE);
-	game->player.x_position = x;
-	game->player.y_position = y;
-	game->map.p_x_position = x;
-	game->map.p_y_position = y;
+	game->player.x = x;
+	game->player.y = y;
 }
 
 void	get_image(t_game *game)
@@ -77,19 +75,19 @@ int	ft_update (void *game_, int x, int y)
 	t_game *game;
 
 	game = (t_game *)game_;
-	if (x != game->player.x_position || y != game->player.y_position)
+	if (x != game->player.x || y != game->player.y)
 	{
 		game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[PLAYER], &game->img.img_height, &game->img.img_width); 
 	}
 	else
 		return (0);
 
-	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, game->player.x_position * IMAGE_SIZE, game->player.y_position * IMAGE_SIZE);
+	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
 	game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[FLOOR], &game->img.img_height, &game->img.img_width);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, x * IMAGE_SIZE, y * IMAGE_SIZE);
 	game->map.map[y][x] = '0';
-	x = game->player.x_position;
-	y = game->player.y_position;
+	x = game->player.x;
+	y = game->player.y;
 	if (game->map.map[y][x] == 'C')
 	{
 		game->map.num_collectible -= 1;
@@ -123,27 +121,27 @@ int	ft_input(int key, void *game_)
 	t_game *game;
 
 	game = (t_game *)game_;
-	x = game->player.x_position;
-	y = game->player.y_position;
+	x = game->player.x;
+	y = game->player.y;
 	if (key == W)
 	{
 		if (is_avalable_to_move(game, game->map.map[y - 1][x]))
-			game->player.y_position -= 1;
+			game->player.y -= 1;
 	}
 	if (key == S)
 	{
 		if (is_avalable_to_move(game, game->map.map[y + 1][x]))
-			game->player.y_position += 1;
+			game->player.y += 1;
 	}
 	if (key == A)
 	{
 		if (is_avalable_to_move(game, game->map.map[y][x - 1]))
-			game->player.x_position -= 1;
+			game->player.x -= 1;
 	}
 	if (key == D)
 	{
 		if (is_avalable_to_move(game, game->map.map[y][x + 1]))
-			game->player.x_position += 1;
+			game->player.x += 1;
 	}
 	if (key == ESC)
 		exit(1);
@@ -182,7 +180,7 @@ int	main(int argc, char **argv)
 	mlx_hook(game.mlx_win, EVENT_KEY_PRESS, MASK_KEY_PRESS, &ft_input, &game);
 	mlx_hook(game.mlx_win, EVENT_WINDOW_CLOSE, MASK_WINDOW_RESIZE, &close_window, &game);
 	mlx_hook(game.mlx_win, EVENT_WINDOW_RESIZE, MASK_WINDOW_CLOSE, &minimize_window, &game);
-	printf("main y-> %d\n", game.player.y_position);
+	printf("main y-> %d\n", game.player.y);
 	mlx_loop(game.mlx);
 	free_all(game.map.map, game.map.number_of_rows);
 	// system("leaks so_long");
