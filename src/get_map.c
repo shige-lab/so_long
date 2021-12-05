@@ -6,13 +6,13 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:10:10 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/03 01:37:55 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/05 14:28:56 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	move_list_to_duoble_pointer(t_game *game);
+void	move_list_to_duoble_pointer(t_game *game, t_list *map);
 size_t	map_row_len(const char *row);
 int		check_map_row_is_valid(char *row, size_t row_lens, t_game *game);
 int		check_map_edge_row(char *row);
@@ -21,19 +21,20 @@ int		check_map_is_invalid(t_list *map, size_t number_of_rews, t_game *game);
 t_game	get_map_data(int fd, t_game *game)
 {
 	t_list	*map;
+	t_list	*tmp;
 
 	game->map.number_of_rows = 0;
-	map = ft_lstnew(get_next_line(fd));
-	game->map_tmp = map;
-	while (map->content != NULL)
+	tmp = ft_lstnew(get_next_line(fd));
+	map = tmp;
+	while (tmp->content != NULL)
 	{
 		game->map.number_of_rows++;
-		map->next = ft_lstnew(get_next_line(fd));
-		map = map->next;
+		tmp->next = ft_lstnew(get_next_line(fd));
+		tmp = tmp->next;
 	}
-	if (check_map_is_invalid(game->map_tmp, game->map.number_of_rows, game))
+	if (check_map_is_invalid(map, game->map.number_of_rows, game))
 		error_exit("invalid map");
-	move_list_to_duoble_pointer(game);
+	move_list_to_duoble_pointer(game, map);
 	return (*game);
 }
 
@@ -77,31 +78,33 @@ int	check_map_row_is_valid(char *row, size_t row_lens, t_game *game)
 	return (0);
 }
 
-int	check_map_is_invalid(t_list *map_tmp, size_t number_of_rews, t_game *game)
+int	check_map_is_invalid(t_list *map, size_t number_of_rews, t_game *game)
 {
 	size_t	i;
 	int		error_flag;
+	t_list	*tmp;
 
 	error_flag = 0;
 	i = 0;
-	game->map.row_lens = map_row_len(map_tmp->content);
-	while (map_tmp->content != NULL && error_flag == 0)
+	game->map.row_lens = map_row_len(map->content);
+	tmp = map;
+	while (tmp->content != NULL && error_flag == 0)
 	{
-		if (i != 0 && game->map.row_lens != map_row_len(map_tmp->content))
+		if (i != 0 && game->map.row_lens != map_row_len(tmp->content))
 		{
 			error_flag = 1;
 			break ;
 		}
 		if (i == 0 || i + 1 == number_of_rews)
-			error_flag = check_map_edge_row(map_tmp->content);
+			error_flag = check_map_edge_row(tmp->content);
 		else
-			error_flag = check_map_row_is_valid(map_tmp->content, game->map.row_lens, game);
+			error_flag = check_map_row_is_valid(tmp->content, game->map.row_lens, game); 
 		i++;
-		map_tmp = map_tmp->next;
+		tmp = tmp->next;
 	}
 	// error_flag += check_map_row_is_valid(NULL, row_lens);
 	if (error_flag)
-		ft_lstclear(&map_tmp, free);
+		ft_lstclear(&map, free);
 	return (error_flag);
 }
 
@@ -119,24 +122,24 @@ size_t	map_row_len(const char *row)
 	return (i);
 }
 
-void	move_list_to_duoble_pointer(t_game *game)
+void	move_list_to_duoble_pointer(t_game *game, t_list *map)
 {
 	size_t	i;
-	t_list	*map;
+	t_list	*tmp;
 
 	i = 0;
 	game->map.map = (char **)ft_calloc(game->map.number_of_rows + 1, sizeof(char *));
 	if (game->map.map == NULL)
 	{
-		ft_lstclear(&game->map_tmp, free);
+		ft_lstclear(&map, free);
 		error_exit("failed malloc");
 	}
-	map = game->map_tmp;
+	tmp= map;
 	while (i < game->map.number_of_rows)
 	{
-		game->map.map[i] = map->content;
-		map = map->next;
+		game->map.map[i] = tmp->content;
+		tmp = tmp->next;
 		i++;
 	}
-	ft_lstclear(&game->map_tmp, NULL);
+	ft_lstclear(&map, NULL);
 }

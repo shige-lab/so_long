@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:02:41 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/05 14:03:09 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/05 14:26:02 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_plyaer
 typedef struct s_game
 {
 	t_map		map;
-	t_list		*map_tmp;
 	void		*mlx;
 	void		*mlx_win;
 	t_img		img;
