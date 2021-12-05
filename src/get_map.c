@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:10:10 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/05 14:28:56 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/05 14:42:02 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	move_list_to_duoble_pointer(t_game *game, t_list *map);
 size_t	map_row_len(const char *row);
 int		check_map_row_is_valid(char *row, size_t row_lens, t_game *game);
 int		check_map_edge_row(char *row);
-int		check_map_is_invalid(t_list *map, size_t number_of_rews, t_game *game);
+t_bool	get_map_info(t_list *map, size_t number_of_rews, t_game *game);
 
 t_game	get_map_data(int fd, t_game *game)
 {
@@ -32,7 +32,7 @@ t_game	get_map_data(int fd, t_game *game)
 		tmp->next = ft_lstnew(get_next_line(fd));
 		tmp = tmp->next;
 	}
-	if (check_map_is_invalid(map, game->map.number_of_rows, game))
+	if (get_map_info(map, game->map.number_of_rows, game) == FALSE)
 		error_exit("invalid map");
 	move_list_to_duoble_pointer(game, map);
 	return (*game);
@@ -78,7 +78,7 @@ int	check_map_row_is_valid(char *row, size_t row_lens, t_game *game)
 	return (0);
 }
 
-int	check_map_is_invalid(t_list *map, size_t number_of_rews, t_game *game)
+t_bool	get_map_info(t_list *map, size_t number_of_rews, t_game *game)
 {
 	size_t	i;
 	int		error_flag;
@@ -98,14 +98,17 @@ int	check_map_is_invalid(t_list *map, size_t number_of_rews, t_game *game)
 		if (i == 0 || i + 1 == number_of_rews)
 			error_flag = check_map_edge_row(tmp->content);
 		else
-			error_flag = check_map_row_is_valid(tmp->content, game->map.row_lens, game); 
+			error_flag = check_map_row_is_valid(tmp->content, game->map.row_lens, game);
 		i++;
 		tmp = tmp->next;
 	}
 	// error_flag += check_map_row_is_valid(NULL, row_lens);
 	if (error_flag)
+	{
 		ft_lstclear(&map, free);
-	return (error_flag);
+		return (FALSE);
+	}
+	return (TRUE);
 }
 
 size_t	map_row_len(const char *row)
