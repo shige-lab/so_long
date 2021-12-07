@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:02:41 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/07 15:25:55 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/07 16:56:39 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,15 @@ typedef struct s_map
 typedef struct s_img
 {
 	void	*img;
-	int		*data;
-	int		line_height;
-	int		bpp;
-	int		endian;
 	int		img_width;
 	int		img_height;
 }				t_img;
 
-typedef struct s_plyaer
+typedef struct s_player
 {
-	int	x;
-	int	y;
-}				t_plyaer;
+	size_t	x;
+	size_t	y;
+}	t_player;
 
 typedef struct s_game
 {
@@ -83,8 +79,8 @@ typedef struct s_game
 	void		*mlx;
 	void		*mlx_win;
 	t_img		img;
-	t_plyaer	player;
-	int			move_count;
+	t_player	player;
+	size_t		move_count;
 }	t_game;
 
 char	*get_next_line(int fd);

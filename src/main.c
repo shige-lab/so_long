@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:16:16 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/07 16:42:01 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/07 16:56:58 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ const char	*g_assets_path[5] = {
 	"assets/sprite/spriteB/spriteB2.xpm",
 };
 
-void	ft_put_image_to_window(t_game *game, int x, int y)
+void	ft_put_image_to_window(t_game *game, size_t x, size_t y)
 {
 	x *= IMAGE_SIZE;
 	y *= IMAGE_SIZE;
@@ -76,7 +76,7 @@ void	get_image(t_game *game)
 	}
 }
 
-int	ft_update(void *game_, int x, int y)
+int	ft_update(void *game_, size_t x, size_t y)
 {
 	t_game	*game;
 
@@ -96,7 +96,6 @@ int	ft_update(void *game_, int x, int y)
 		game->map.num_collectible -= 1;
 	}
 	game->map.map[y][x] = 'P';
-	printf(" c = %ld\n", game->map.num_collectible);
 	return (0);
 }
 
@@ -111,7 +110,7 @@ t_bool	can_move(t_game *game, char next_position)
 	if (next_position != '1')
 	{
 		game->move_count += 1;
-		printf("count-> %d\n", game->move_count);
+		printf("move count-> %zu\n", game->move_count);
 		return (TRUE);
 	}
 	return (FALSE);
@@ -119,8 +118,8 @@ t_bool	can_move(t_game *game, char next_position)
 
 int	ft_input(int key, void *game_)
 {
-	int		x;
-	int		y;
+	size_t	x;
+	size_t	y;
 	t_game	*game;
 
 	game = (t_game *)game_;
@@ -148,14 +147,12 @@ int	ft_input(int key, void *game_)
 
 int	close_window(void)
 {
-	printf("close\n");
 	exit(1);
 }
 
 int	minimize_window(t_game *game)
 {
 	get_image(game);
-	printf("minimize\n");
 }
 
 int	main(int argc, char **argv)
@@ -172,12 +169,11 @@ int	main(int argc, char **argv)
 	get_map_data(fd, &game);
 	game.mlx = mlx_init();
 	game.mlx_win = mlx_new_window(game.mlx, game.map.width * IMAGE_SIZE, \
-		game.map.height * IMAGE_SIZE, "so_long");
+		game.map.height * IMAGE_SIZE, argv[0]);
 	get_image(&game);
 	mlx_hook(game.mlx_win, E_KEY_PRESS, M_KEY_PRESS, &ft_input, &game);
 	mlx_hook(game.mlx_win, E_WIN_CLOSE, M_WIN_RESIZE, &close_window, &game);
 	mlx_hook(game.mlx_win, E_WIN_RESIZE, M_WIN_CLOSE, &minimize_window, &game);
-	printf("main y-> %d\n", game.player.y);
 	mlx_loop(game.mlx);
 	free_all(game.map.map, game.map.height);
 	return (0);
@@ -185,8 +181,8 @@ int	main(int argc, char **argv)
 
 void	error_exit(char *message)
 {
-	ft_printf("Error\n");
-	ft_printf("%s\n", message);
+	printf("Error\n");
+	printf("%s\n", message);
 	system("leaks so_long");
 	exit (1);
 }
