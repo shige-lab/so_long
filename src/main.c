@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:16:16 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/07 15:32:35 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:50:23 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	select_image(t_game *game, char c)
 
 void	get_p_position(t_game *game, int x, int y)
 {
-	game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[PLAYER], &game->img.img_height, &game->img.img_width); 
+	game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[PLAYER], &game->img.img_height, &game->img.img_width);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, x * IMAGE_SIZE, y * IMAGE_SIZE);
 	game->player.x = x;
 	game->player.y = y;
@@ -70,18 +70,17 @@ void	get_image(t_game *game)
 	}
 }
 
-int	ft_update (void *game_, int x, int y)
+int	ft_update(void *game_, int x, int y)
 {
-	t_game *game;
+	t_game	*game;
 
 	game = (t_game *)game_;
 	if (x != game->player.x || y != game->player.y)
 	{
-		game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[PLAYER], &game->img.img_height, &game->img.img_width); 
+		game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[PLAYER], &game->img.img_height, &game->img.img_width);
 	}
 	else
 		return (0);
-
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
 	game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[FLOOR], &game->img.img_height, &game->img.img_width);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, x * IMAGE_SIZE, y * IMAGE_SIZE);
@@ -116,9 +115,9 @@ t_bool	is_available_to_move(t_game *game, char next_position)
 
 int	ft_input(int key, void *game_)
 {
-	int			x;
-	int			y;
-	t_game *game;
+	int		x;
+	int		y;
+	t_game	*game;
 
 	game = (t_game *)game_;
 	x = game->player.x;
