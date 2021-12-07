@@ -97,7 +97,7 @@ int	ft_update (void *game_, int x, int y)
 	return (0);
 }
 
-t_bool	is_avalable_to_move(t_game *game, char next_position)
+t_bool	is_available_to_move(t_game *game, char next_position)
 {
 	if (next_position == 'E')
 	{
@@ -125,22 +125,22 @@ int	ft_input(int key, void *game_)
 	y = game->player.y;
 	if (key == W)
 	{
-		if (is_avalable_to_move(game, game->map.map[y - 1][x]))
+		if (is_available_to_move(game, game->map.map[y - 1][x]))
 			game->player.y -= 1;
 	}
 	if (key == S)
 	{
-		if (is_avalable_to_move(game, game->map.map[y + 1][x]))
+		if (is_available_to_move(game, game->map.map[y + 1][x]))
 			game->player.y += 1;
 	}
 	if (key == A)
 	{
-		if (is_avalable_to_move(game, game->map.map[y][x - 1]))
+		if (is_available_to_move(game, game->map.map[y][x - 1]))
 			game->player.x -= 1;
 	}
 	if (key == D)
 	{
-		if (is_avalable_to_move(game, game->map.map[y][x + 1]))
+		if (is_available_to_move(game, game->map.map[y][x + 1]))
 			game->player.x += 1;
 	}
 	if (key == ESC)
