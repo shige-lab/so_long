@@ -170,20 +170,19 @@ int	main(int argc, char **argv)
 		error_exit("invalid argument");
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		error_exit("invalid map");
-	game = (t_game){0}; 
+		error_exit("File open failed.");
+	game = (t_game){0};
 	get_map_data(fd, &game);
 	game.mlx = mlx_init();
-	game.mlx_win = mlx_new_window(game.mlx, game.map.width * IMAGE_SIZE, game.map.length * IMAGE_SIZE, "so_long");
+	game.mlx_win = mlx_new_window(game.mlx, game.map.width * IMAGE_SIZE, \
+		game.map.length * IMAGE_SIZE, "so_long");
 	get_image(&game);
-	// mlx_key_hook(game.mlx_win, *ft_input, &game);
-	mlx_hook(game.mlx_win, EVENT_KEY_PRESS, MASK_KEY_PRESS, &ft_input, &game);
-	mlx_hook(game.mlx_win, EVENT_WINDOW_CLOSE, MASK_WINDOW_RESIZE, &close_window, &game);
-	mlx_hook(game.mlx_win, EVENT_WINDOW_RESIZE, MASK_WINDOW_CLOSE, &minimize_window, &game);
+	mlx_hook(game.mlx_win, E_KEY_PRESS, M_KEY_PRESS, &ft_input, &game);
+	mlx_hook(game.mlx_win, E_WIN_CLOSE, M_WIN_RESIZE, &close_window, &game);
+	mlx_hook(game.mlx_win, E_WIN_RESIZE, M_WIN_CLOSE, &minimize_window, &game);
 	printf("main y-> %d\n", game.player.y);
 	mlx_loop(game.mlx);
 	free_all(game.map.map, game.map.length);
-	// system("leaks so_long");
 	return (0);
 }
 

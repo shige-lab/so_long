@@ -20,13 +20,13 @@
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 
-# define EVENT_KEY_PRESS 2
-# define EVENT_WINDOW_RESIZE 9
-# define EVENT_WINDOW_CLOSE 17
+# define E_KEY_PRESS 2
+# define E_WIN_RESIZE 9
+# define E_WIN_CLOSE 17
 
-# define MASK_KEY_PRESS 1
-# define MASK_WINDOW_RESIZE 2097152
-# define MASK_WINDOW_CLOSE 131072
+# define M_KEY_PRESS 1
+# define M_WIN_RESIZE 2097152
+# define M_WIN_CLOSE 131072
 
 # define IMAGE_SIZE 32
 
