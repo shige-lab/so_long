@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:16:16 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/07 15:50:23 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/07 16:42:01 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ const char	*g_assets_path[5] = {
 	"assets/sprite/spriteB/spriteB2.xpm",
 };
 
+void	ft_put_image_to_window(t_game *game, int x, int y)
+{
+	x *= IMAGE_SIZE;
+	y *= IMAGE_SIZE;
+	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, x, y);
+}
+
 void	free_all(char **map, size_t i)
 {
 	while (i > 0 )
@@ -29,22 +36,20 @@ void	free_all(char **map, size_t i)
 
 void	select_image(t_game *game, char c)
 {
-	if (c == '1')
-		game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[WALL], &game->img.img_height, &game->img.img_width);
-	else if (c == '0' || c == 'P')
-		game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[FLOOR], &game->img.img_height, &game->img.img_width);
-	else if (c == 'C')
-		game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[COLLECTIBLE], &game->img.img_height, &game->img.img_width);
-	else if (c == 'E')
-		game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[EXIT], &game->img.img_height, &game->img.img_width);
-}
+	char	*path;
 
-void	get_p_position(t_game *game, int x, int y)
-{
-	game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[PLAYER], &game->img.img_height, &game->img.img_width);
-	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, x * IMAGE_SIZE, y * IMAGE_SIZE);
-	game->player.x = x;
-	game->player.y = y;
+	if (c == '1')
+		path = (char *)g_assets_path[WALL];
+	else if (c == '0')
+		path = (char *)g_assets_path[FLOOR];
+	else if (c == 'C')
+		path = (char *)g_assets_path[COLLECTIBLE];
+	else if (c == 'P')
+		path = (char *)g_assets_path[PLAYER];
+	else if (c == 'E')
+		path = (char *)g_assets_path[EXIT];
+	game->img.img = mlx_xpm_file_to_image(game->mlx, path, \
+		&game->img.img_height, &game->img.img_width);
 }
 
 void	get_image(t_game *game)
@@ -59,10 +64,11 @@ void	get_image(t_game *game)
 		while (x < game->map.width)
 		{
 			select_image(game, game->map.map[y][x]);
-			mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, x * IMAGE_SIZE, y * IMAGE_SIZE);
+			ft_put_image_to_window(game, x, y);
 			if (game->map.map[y][x] == 'P')
 			{
-				get_p_position(game, x, y);
+				game->player.x = x;
+				game->player.y = y;
 			}
 			x++;
 		}
@@ -76,14 +82,12 @@ int	ft_update(void *game_, int x, int y)
 
 	game = (t_game *)game_;
 	if (x != game->player.x || y != game->player.y)
-	{
-		game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[PLAYER], &game->img.img_height, &game->img.img_width);
-	}
+		select_image(game, 'P');
 	else
 		return (0);
-	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
-	game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[FLOOR], &game->img.img_height, &game->img.img_width);
-	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, x * IMAGE_SIZE, y * IMAGE_SIZE);
+	ft_put_image_to_window(game, game->player.x, game->player.y);
+	select_image(game, '0');
+	ft_put_image_to_window(game, x, y);
 	game->map.map[y][x] = '0';
 	x = game->player.x;
 	y = game->player.y;
@@ -96,7 +100,7 @@ int	ft_update(void *game_, int x, int y)
 	return (0);
 }
 
-t_bool	is_available_to_move(t_game *game, char next_position)
+t_bool	can_move(t_game *game, char next_position)
 {
 	if (next_position == 'E')
 	{
@@ -122,29 +126,23 @@ int	ft_input(int key, void *game_)
 	game = (t_game *)game_;
 	x = game->player.x;
 	y = game->player.y;
-	if (key == W)
-	{
-		if (is_available_to_move(game, game->map.map[y - 1][x]))
-			game->player.y -= 1;
-	}
-	if (key == S)
-	{
-		if (is_available_to_move(game, game->map.map[y + 1][x]))
-			game->player.y += 1;
-	}
-	if (key == A)
-	{
-		if (is_available_to_move(game, game->map.map[y][x - 1]))
-			game->player.x -= 1;
-	}
-	if (key == D)
-	{
-		if (is_available_to_move(game, game->map.map[y][x + 1]))
-			game->player.x += 1;
-	}
 	if (key == ESC)
 		exit(1);
-	ft_update(game, x, y);
+	if (key == W)
+		game->player.y -= 1;
+	if (key == S)
+		game->player.y += 1;
+	if (key == A)
+		game->player.x -= 1;
+	if (key == D)
+		game->player.x += 1;
+	if (can_move(game, game->map.map[game->player.y][game->player.x]))
+		ft_update(game, x, y);
+	else
+	{
+		game->player.x = x;
+		game->player.y = y;
+	}
 	return (0);
 }
 
