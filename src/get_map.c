@@ -12,11 +12,11 @@
 
 #include "../include/so_long.h"
 
-void	move_list_to_duoble_pointer(t_game *game, t_list *map);
+void	move_list_to_double_pointer(t_game *game, t_list *map);
 size_t	map_row_len(const char *row);
 t_bool	check_middle_row(char *row, size_t width, t_game *game);
 t_bool	check_edge_row(char *row);
-t_bool	get_map_info(t_list *map, size_t number_of_rews, t_game *game);
+t_bool	get_map_info(t_list *map, t_game *game);
 
 t_game	get_map_data(int fd, t_game *game)
 {
@@ -32,9 +32,9 @@ t_game	get_map_data(int fd, t_game *game)
 		tmp->next = ft_lstnew(get_next_line(fd));
 		tmp = tmp->next;
 	}
-	if (get_map_info(map, game->map.length, game) == FALSE)
+	if (get_map_info(map, game) == FALSE)
 		error_exit("invalid map");
-	move_list_to_duoble_pointer(game, map);
+	move_list_to_double_pointer(game, map);
 	return (*game);
 }
 
@@ -72,7 +72,7 @@ t_bool	check_middle_row(char *row, size_t width, t_game *game)
 	return (TRUE);
 }
 
-t_bool	get_map_info(t_list *map, size_t number_of_rews, t_game *game)
+t_bool	get_map_info(t_list *map, t_game *game)
 {
 	size_t	i;
 	t_bool	is_valid;
@@ -89,7 +89,7 @@ t_bool	get_map_info(t_list *map, size_t number_of_rews, t_game *game)
 			is_valid = FALSE;
 			break ;
 		}
-		if (i == 0 || i + 1 == number_of_rews)
+		if (i == 0 || i + 1 == game->map.length)
 			is_valid = check_edge_row(tmp->content);
 		else
 			is_valid = check_middle_row(tmp->content, game->map.width, game);
@@ -118,7 +118,7 @@ size_t	map_row_len(const char *row)
 	return (i);
 }
 
-void	move_list_to_duoble_pointer(t_game *game, t_list *map)
+void	move_list_to_double_pointer(t_game *game, t_list *map)
 {
 	size_t	i;
 	t_list	*tmp;
@@ -130,7 +130,7 @@ void	move_list_to_duoble_pointer(t_game *game, t_list *map)
 		ft_lstclear(&map, free);
 		error_exit("failed malloc");
 	}
-	tmp= map;
+	tmp = map;
 	while (i < game->map.length)
 	{
 		game->map.map[i] = tmp->content;
