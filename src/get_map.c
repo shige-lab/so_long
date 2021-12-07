@@ -23,12 +23,12 @@ t_game	get_map_data(int fd, t_game *game)
 	t_list	*map;
 	t_list	*tmp;
 
-	game->map.length = 0;
+	game->map.height = 0;
 	tmp = ft_lstnew(get_next_line(fd));
 	map = tmp;
 	while (tmp->content != NULL)
 	{
-		game->map.length++;
+		game->map.height++;
 		tmp->next = ft_lstnew(get_next_line(fd));
 		tmp = tmp->next;
 	}
@@ -89,7 +89,7 @@ t_bool	get_map_info(t_list *map, t_game *game)
 			is_valid = FALSE;
 			break ;
 		}
-		if (i == 0 || i + 1 == game->map.length)
+		if (i == 0 || i + 1 == game->map.height)
 			is_valid = check_edge_row(tmp->content);
 		else
 			is_valid = check_middle_row(tmp->content, game->map.width, game);
@@ -124,14 +124,14 @@ void	move_list_to_double_pointer(t_game *game, t_list *map)
 	t_list	*tmp;
 
 	i = 0;
-	game->map.map = (char **)ft_calloc(game->map.length + 1, sizeof(char *));
+	game->map.map = (char **)ft_calloc(game->map.height + 1, sizeof(char *));
 	if (game->map.map == NULL)
 	{
 		ft_lstclear(&map, free);
 		error_exit("failed malloc");
 	}
 	tmp = map;
-	while (i < game->map.length)
+	while (i < game->map.height)
 	{
 		game->map.map[i] = tmp->content;
 		tmp = tmp->next;

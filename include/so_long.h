@@ -54,7 +54,7 @@ typedef struct s_map
 {
 	char	**map;
 	size_t	width;
-	size_t	length;
+	size_t	height;
 	size_t	num_collectible;
 	size_t	num_exit;
 	size_t	num_s_position;
@@ -64,7 +64,7 @@ typedef struct s_img
 {
 	void	*img;
 	int		*data;
-	int		line_length;
+	int		line_height;
 	int		bpp;
 	int		endian;
 	int		img_width;
