@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:16:16 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/05 15:16:08 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:32:35 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	select_image(t_game *game, char c)
 		game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[EXIT], &game->img.img_height, &game->img.img_width);
 }
 
-void	get_p_positon(t_game *game, int x, int y)
+void	get_p_position(t_game *game, int x, int y)
 {
 	game->img.img = mlx_xpm_file_to_image(game->mlx, (char *)g_assets_path[PLAYER], &game->img.img_height, &game->img.img_width); 
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, x * IMAGE_SIZE, y * IMAGE_SIZE);
@@ -62,7 +62,7 @@ void	get_image(t_game *game)
 			mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, x * IMAGE_SIZE, y * IMAGE_SIZE);
 			if (game->map.map[y][x] == 'P')
 			{
-				get_p_positon(game, x, y);
+				get_p_position(game, x, y);
 			}
 			x++;
 		}

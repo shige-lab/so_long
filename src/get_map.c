@@ -1,58 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_map.c                                          :+:      :+:    :+:   */
+/*   get_map_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:10:10 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/05 15:16:08 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:30:17 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	move_list_to_double_pointer(t_game *game, t_list *map);
-size_t	map_row_len(const char *row);
-t_bool	check_middle_row(char *row, size_t width, t_game *game);
-t_bool	check_edge_row(char *row);
-t_bool	get_map_info(t_list *map, t_game *game);
-
-t_game	get_map_data(int fd, t_game *game)
-{
-	t_list	*map;
-	t_list	*tmp;
-
-	game->map.height = 0;
-	tmp = ft_lstnew(get_next_line(fd));
-	map = tmp;
-	while (tmp->content != NULL)
-	{
-		game->map.height++;
-		tmp->next = ft_lstnew(get_next_line(fd));
-		tmp = tmp->next;
-	}
-	if (get_map_info(map, game) == FALSE)
-	{
-		ft_lstclear(&map, free);
-		error_exit("invalid map");
-	}
-	move_list_to_double_pointer(game, map);
-	return (*game);
-}
-
-t_bool	check_edge_row(char *row)
-{
-	while (*row)
-	{
-		if (*row != '1' && *row != '\n')
-			return (FALSE);
-		row++;
-	}
-	return (TRUE);
-}
-
-t_bool	check_middle_row(char *row, size_t width, t_game *game)
+static t_bool	check_middle_row(char *row, size_t width, t_game *game)
 {
 	if (row[0] != '1' || row[width - 1] != '1')
 		return (FALSE);
@@ -75,7 +35,32 @@ t_bool	check_middle_row(char *row, size_t width, t_game *game)
 	return (TRUE);
 }
 
-t_bool	get_map_info(t_list *map, t_game *game)
+static t_bool	check_edge_row(char *row)
+{
+	while (*row)
+	{
+		if (*row != '1' && *row != '\n')
+			return (FALSE);
+		row++;
+	}
+	return (TRUE);
+}
+
+static size_t	map_row_len(const char *row)
+{
+	size_t	i;
+
+	i = 0;
+	while (*row != '\0')
+	{
+		if (ft_strchr("10CPE", *row))
+			i++;
+		row++;
+	}
+	return (i);
+}
+
+static t_bool	get_map_info(t_list *map, t_game *game)
 {
 	size_t	i;
 
@@ -101,38 +86,24 @@ t_bool	get_map_info(t_list *map, t_game *game)
 	return (TRUE);
 }
 
-size_t	map_row_len(const char *row)
+void	get_map_data(int fd, t_game *game)
 {
-	size_t	i;
-
-	i = 0;
-	while (*row != '\0')
-	{
-		if (ft_strchr("10CPE", *row))
-			i++;
-		row++;
-	}
-	return (i);
-}
-
-void	move_list_to_double_pointer(t_game *game, t_list *map)
-{
-	size_t	i;
+	t_list	*map;
 	t_list	*tmp;
 
-	i = 0;
-	game->map.map = (char **)ft_calloc(game->map.height + 1, sizeof(char *));
-	if (game->map.map == NULL)
+	game->map.height = 0;
+	tmp = ft_lstnew(get_next_line(fd));
+	map = tmp;
+	while (tmp->content != NULL)
+	{
+		game->map.height++;
+		tmp->next = ft_lstnew(get_next_line(fd));
+		tmp = tmp->next;
+	}
+	if (get_map_info(map, game) == FALSE)
 	{
 		ft_lstclear(&map, free);
-		error_exit("failed malloc");
+		error_exit("invalid map");
 	}
-	tmp = map;
-	while (i < game->map.height)
-	{
-		game->map.map[i] = tmp->content;
-		tmp = tmp->next;
-		i++;
-	}
-	ft_lstclear(&map, NULL);
+	move_list_to_double_pointer(game, map);
 }

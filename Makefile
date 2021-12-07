@@ -3,7 +3,7 @@ LIBFT = libft/libft.a
 MINILIBX = minilibx-linux/libmlx.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = src/get_map.c src/main.c
+SRCS = src/get_map.c src/main.c src/get_map_utils.c
 OBJS = $(SRCS:%.c=%.o)
 
 FRAMEWORK = -L ./minilibx-linux -lmlx -I ./minilibx-linux -lXext -lX11 -lm

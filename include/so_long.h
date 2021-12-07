@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:02:41 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/05 15:16:08 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:25:55 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ typedef struct s_game
 }	t_game;
 
 char	*get_next_line(int fd);
-t_game	get_map_data(int fd, t_game *game);
+void	get_map_data(int fd, t_game *game);
 void	error_exit(char *message);
+void	move_list_to_double_pointer(t_game *game, t_list *map);
 
 #endif
