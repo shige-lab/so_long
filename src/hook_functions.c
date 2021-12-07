@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 17:01:47 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/07 17:04:13 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/07 17:40:04 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_input(int key, void *game_)
 	x = game->player.x;
 	y = game->player.y;
 	if (key == ESC)
-		exit(1);
+		exit(0);
 	if (key == W)
 		game->player.y -= 1;
 	if (key == S)
@@ -66,7 +66,7 @@ int	ft_input(int key, void *game_)
 
 int	close_window(void)
 {
-	exit(1);
+	exit(0);
 }
 
 int	minimize_window(t_game *game)

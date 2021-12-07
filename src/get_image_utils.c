@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 17:08:41 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/07 17:11:57 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/07 17:41:11 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	select_image(t_game *game, char c)
 		path = (char *)g_assets_path[EXIT];
 	game->img.img = mlx_xpm_file_to_image(game->mlx, path, \
 		&game->img.img_height, &game->img.img_width);
+	if (game->img.img == NULL)
+		error_exit("Malloc failed.");
 }
 
 void	get_image(t_game *game)
@@ -58,6 +60,7 @@ void	get_image(t_game *game)
 		{
 			select_image(game, game->map.map[y][x]);
 			ft_put_image_to_window(game, x, y);
+			free(game->img.img);
 			if (game->map.map[y][x] == 'P')
 			{
 				game->player.x = x;
@@ -74,7 +77,7 @@ t_bool	can_move(t_game *game, char next_position)
 	if (next_position == 'E')
 	{
 		if (game->map.num_collectible == 0)
-			exit (1);
+			exit (0);
 		return (FALSE);
 	}
 	if (next_position != '1')

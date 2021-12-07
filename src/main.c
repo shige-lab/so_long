@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:16:16 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/07 17:10:25 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/07 17:34:24 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,12 @@ int	main(int argc, char **argv)
 	game = (t_game){0};
 	get_map_data(fd, &game);
 	game.mlx = mlx_init();
+	if (game.mlx == NULL)
+		error_exit("malloc failed");
 	game.mlx_win = mlx_new_window(game.mlx, game.map.width * IMAGE_SIZE, \
 		game.map.height * IMAGE_SIZE, argv[0]);
+	if (game.mlx_win == NULL)
+		error_exit("malloc failed");
 	get_image(&game);
 	mlx_hook(game.mlx_win, E_KEY_PRESS, M_KEY_PRESS, ft_input, &game);
 	mlx_hook(game.mlx_win, E_WIN_CLOSE, M_WIN_RESIZE, close_window, &game);
