@@ -33,7 +33,10 @@ t_game	get_map_data(int fd, t_game *game)
 		tmp = tmp->next;
 	}
 	if (get_map_info(map, game) == FALSE)
+	{
+		ft_lstclear(&map, free);
 		error_exit("invalid map");
+	}
 	move_list_to_double_pointer(game, map);
 	return (*game);
 }
@@ -75,31 +78,25 @@ t_bool	check_middle_row(char *row, size_t width, t_game *game)
 t_bool	get_map_info(t_list *map, t_game *game)
 {
 	size_t	i;
-	t_bool	is_valid;
-	t_list	*tmp;
 
-	is_valid = TRUE;
 	i = 0;
 	game->map.width = map_row_len(map->content);
-	tmp = map;
-	while (tmp->content != NULL && is_valid == TRUE)
+	while (map->content != NULL)
 	{
-		if (i != 0 && game->map.width != map_row_len(tmp->content))
-		{
-			is_valid = FALSE;
-			break ;
-		}
+		if (i != 0 && game->map.width != map_row_len(map->content))
+			return (FALSE);
 		if (i == 0 || i + 1 == game->map.height)
-			is_valid = check_edge_row(tmp->content);
+		{
+			if (check_edge_row(map->content) == FALSE)
+				return (FALSE);
+		}
 		else
-			is_valid = check_middle_row(tmp->content, game->map.width, game);
+		{
+			if (check_middle_row(map->content, game->map.width, game) == FALSE)
+				return (FALSE);
+		}
 		i++;
-		tmp = tmp->next;
-	}
-	if (is_valid == FALSE)
-	{
-		ft_lstclear(&map, free);
-		return (FALSE);
+		map = map->next;
 	}
 	return (TRUE);
 }
