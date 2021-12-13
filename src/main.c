@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:16:16 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/07 17:34:24 by tshigena         ###   ########.fr       */
+/*   Updated: 2021/12/13 16:25:57 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,27 @@ void	free_all(char **map, size_t i)
 	free(map);
 }
 
+void	error_exit(char *message)
+{
+	printf("Error\n");
+	printf("%s\n", message);
+	exit (1);
+}
+
+int	open_if_file_is_valid(char *argv1)
+{
+	int		fd;
+	size_t	argv1_len;
+
+	argv1_len = ft_strlen(argv1);
+	if (ft_strncmp(argv1 + argv1_len - 4, ".ber", 5))
+		error_exit("invalid extension");
+	fd = open(argv1, O_RDONLY);
+	if (fd == -1)
+		error_exit("File open failed.");
+	return (fd);
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -26,11 +47,10 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		error_exit("invalid argument");
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		error_exit("File open failed.");
+	fd = open_if_file_is_valid(argv[1]);
 	game = (t_game){0};
 	get_map_data(fd, &game);
+	close(fd);
 	game.mlx = mlx_init();
 	if (game.mlx == NULL)
 		error_exit("malloc failed");
@@ -45,12 +65,4 @@ int	main(int argc, char **argv)
 	mlx_loop(game.mlx);
 	free_all(game.map.map, game.map.height);
 	return (0);
-}
-
-void	error_exit(char *message)
-{
-	printf("Error\n");
-	printf("%s\n", message);
-	system("leaks so_long");
-	exit (1);
 }
