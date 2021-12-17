@@ -32,7 +32,7 @@ int	open_if_file_is_valid(char *argv1)
 	size_t	argv1_len;
 
 	argv1_len = ft_strlen(argv1);
-	if (ft_strncmp(argv1 + argv1_len - 4, ".ber", 5))
+	if (argv1_len < 4 || ft_strncmp(argv1 + argv1_len - 4, ".ber", 5))
 		error_exit("invalid extension");
 	fd = open(argv1, O_RDONLY);
 	if (fd == -1)
