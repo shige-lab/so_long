@@ -11,7 +11,7 @@ FRAMEWORK = -L ./minilibx-linux -lmlx -I ./minilibx-linux -lXext -lX11 -lm
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MINILIBX) $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(FRAMEWORK)
+	$(CC) $(CFLAGS) -g -o $(NAME) $(OBJS) $(LIBFT) $(FRAMEWORK)
 
 $(LIBFT): empty
 	make bonus -C libft
