@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 17:01:47 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/07 17:40:04 by tshigena         ###   ########.fr       */
+/*   Updated: 2022/01/06 17:17:50 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ static int	ft_update(void *game_, size_t x, size_t y)
 	return (0);
 }
 
+static void	set_player_position(t_game *game, size_t x, size_t y)
+{
+	game->player.x = x;
+	game->player.y = y;
+}
+
 int	ft_input(int key, void *game_)
 {
 	size_t	x;
@@ -48,21 +54,20 @@ int	ft_input(int key, void *game_)
 	y = game->player.y;
 	if (key == ESC)
 		mlx_loop_end(game->mlx);
-	if (key == W)
+	else if (key == W)
 		game->player.y -= 1;
-	if (key == S)
+	else if (key == S)
 		game->player.y += 1;
-	if (key == A)
+	else if (key == A)
 		game->player.x -= 1;
-	if (key == D)
+	else if (key == D)
 		game->player.x += 1;
+	else
+		return (0);
 	if (can_move(game, game->map.map[game->player.y][game->player.x]))
 		ft_update(game, x, y);
 	else
-	{
-		game->player.x = x;
-		game->player.y = y;
-	}
+		set_player_position(game, x, y);
 	return (0);
 }
 
