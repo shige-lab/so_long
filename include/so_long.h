@@ -89,7 +89,7 @@ void	error_exit(char *message);
 void	move_list_to_double_pointer(t_game *game, t_list *map);
 
 int	ft_input(int key, void *game_);
-int	close_window(void);
+int	close_window(t_game *game);
 int	minimize_window(t_game *game);
 
 void	ft_put_image_to_window(t_game *game, size_t x, size_t y);

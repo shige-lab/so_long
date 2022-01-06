@@ -12,11 +12,15 @@
 
 #include "../include/so_long.h"
 
-void	free_all(char **map, size_t i)
+void	free_all(t_game game, char **map, size_t i)
 {
 	while (i > 0 )
 		free(map[--i]);
 	free(map);
+	mlx_clear_window(game.mlx, game.mlx_win);
+	mlx_destroy_window(game.mlx, game.mlx_win);
+	mlx_destroy_display(game.mlx);
+	free(game.mlx);
 }
 
 void	error_exit(char *message)
@@ -63,6 +67,6 @@ int	main(int argc, char **argv)
 	mlx_hook(game.mlx_win, E_WIN_CLOSE, M_WIN_RESIZE, close_window, &game);
 	mlx_hook(game.mlx_win, E_WIN_RESIZE, M_WIN_CLOSE, minimize_window, &game);
 	mlx_loop(game.mlx);
-	free_all(game.map.map, game.map.height);
-	return (0);
+	free_all(game, game.map.map, game.map.height);
+	exit (0);
 }

@@ -78,7 +78,7 @@ t_bool	can_move(t_game *game, char next_position)
 	if (next_position == 'E')
 	{
 		if (game->map.num_collectible == 0)
-			exit (0);
+			mlx_loop_end(game->mlx);
 		return (FALSE);
 	}
 	if (next_position != '1')

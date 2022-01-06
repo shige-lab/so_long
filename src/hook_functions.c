@@ -47,7 +47,7 @@ int	ft_input(int key, void *game_)
 	x = game->player.x;
 	y = game->player.y;
 	if (key == ESC)
-		exit(0);
+		mlx_loop_end(game->mlx);
 	if (key == W)
 		game->player.y -= 1;
 	if (key == S)
@@ -66,9 +66,9 @@ int	ft_input(int key, void *game_)
 	return (0);
 }
 
-int	close_window(void)
+int	close_window(t_game *game)
 {
-	exit(0);
+	mlx_loop_end(game->mlx);
 }
 
 int	minimize_window(t_game *game)
