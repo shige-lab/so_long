@@ -22,8 +22,10 @@ static int	ft_update(void *game_, size_t x, size_t y)
 	else
 		return (0);
 	ft_put_image_to_window(game, game->player.x, game->player.y);
+	mlx_destroy_image(game->mlx, game->img.img);
 	select_image(game, '0');
 	ft_put_image_to_window(game, x, y);
+	mlx_destroy_image(game->mlx, game->img.img);
 	game->map.map[y][x] = '0';
 	x = game->player.x;
 	y = game->player.y;
