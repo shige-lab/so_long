@@ -60,7 +60,6 @@ void	get_image(t_game *game)
 		{
 			select_image(game, game->map.map[y][x]);
 			ft_put_image_to_window(game, x, y);
-			free(game->img.img);
 			mlx_destroy_image(game->mlx, game->img.img);
 			if (game->map.map[y][x] == 'P')
 			{
