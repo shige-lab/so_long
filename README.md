@@ -62,3 +62,6 @@ an error.
 
 ◦ You must be able to parse any kind of map, as long as it respects the rules of
 the map.
+
+<img width="578" alt="スクリーンショット 2022-01-18 19 51 22" src="https://user-images.githubusercontent.com/76277316/149923726-d1682610-285d-4cde-b077-ecb0c3a681b0.png">
+
