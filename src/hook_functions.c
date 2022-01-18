@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 17:01:47 by tshigena          #+#    #+#             */
-/*   Updated: 2022/01/06 17:17:50 by tshigena         ###   ########.fr       */
+/*   Updated: 2022/01/08 23:46:01 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_input(int key, void *game_)
 	y = game->player.y;
 	if (key == ESC)
 		mlx_loop_end(game->mlx);
-	else if (key == W)
+	if (key == W)
 		game->player.y -= 1;
 	else if (key == S)
 		game->player.y += 1;
@@ -74,9 +74,11 @@ int	ft_input(int key, void *game_)
 int	close_window(t_game *game)
 {
 	mlx_loop_end(game->mlx);
+	return (0);
 }
 
 int	minimize_window(t_game *game)
 {
 	get_image(game);
+	return (0);
 }

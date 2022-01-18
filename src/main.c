@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:16:16 by tshigena          #+#    #+#             */
-/*   Updated: 2021/12/13 16:25:57 by tshigena         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:42:39 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	open_if_file_is_valid(char *argv1)
 		error_exit("invalid extension");
 	fd = open(argv1, O_RDONLY);
 	if (fd == -1)
-		error_exit("File open failed.");
+		error_exit(strerror(errno));
 	return (fd);
 }
 
@@ -57,11 +57,11 @@ int	main(int argc, char **argv)
 	close(fd);
 	game.mlx = mlx_init();
 	if (game.mlx == NULL)
-		error_exit("malloc failed");
+		error_exit(strerror(errno));
 	game.mlx_win = mlx_new_window(game.mlx, game.map.width * IMAGE_SIZE, \
 		game.map.height * IMAGE_SIZE, argv[0]);
 	if (game.mlx_win == NULL)
-		error_exit("malloc failed");
+		error_exit(strerror(errno));
 	get_image(&game);
 	mlx_hook(game.mlx_win, E_KEY_PRESS, M_KEY_PRESS, ft_input, &game);
 	mlx_hook(game.mlx_win, E_WIN_CLOSE, M_WIN_RESIZE, close_window, &game);

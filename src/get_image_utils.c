@@ -6,18 +6,18 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 17:08:41 by tshigena          #+#    #+#             */
-/*   Updated: 2022/01/06 17:23:38 by tshigena         ###   ########.fr       */
+/*   Updated: 2022/01/12 15:40:55 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
 const char	*g_assets_path[5] = {
-	"assets/wall/wallA.xpm",
-	"assets/floor/floorB.xpm",
-	"assets/player/playerA/front/front1.xpm",
-	"assets/exit/exitB2.xpm",
-	"assets/sprite/spriteB/spriteB2.xpm",
+	"assets/wall/wall.xpm",
+	"assets/floor/floor.xpm",
+	"assets/player/player2.xpm",
+	"assets/exit/exit2.xpm",
+	"assets/sprite/sprite2.xpm",
 };
 
 void	ft_put_image_to_window(t_game *game, size_t x, size_t y)
@@ -41,10 +41,12 @@ void	select_image(t_game *game, char c)
 		path = (char *)g_assets_path[PLAYER];
 	else if (c == 'E')
 		path = (char *)g_assets_path[EXIT];
+	else
+		path = NULL;
 	game->img.img = mlx_xpm_file_to_image(game->mlx, path, \
 		&game->img.img_height, &game->img.img_width);
 	if (game->img.img == NULL)
-		error_exit("Malloc failed.");
+		error_exit("get_image failed.");
 }
 
 void	get_image(t_game *game)
